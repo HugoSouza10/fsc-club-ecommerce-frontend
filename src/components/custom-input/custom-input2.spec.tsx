@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import CustomInput from './custom-input.component'
 import Colors from '../../theme/theme.colors'
+import userEvent from '@testing-library/user-event'
 describe('Custom Input 2', () => {
     //Se a propriedade hasError for verdadeira, 
     // o componente deve ser renderizado com um estilo de borda vermelha.
@@ -17,4 +18,11 @@ describe('Custom Input 2', () => {
         const input = getByPlaceholderText('Lorem ipsum');
         expect(input).toHaveStyle({border: 'none'})
     })
+    it('should change value when user types', () => {
+        const {getByPlaceholderText, getByDisplayValue} = render(<CustomInput placeholder='Lorem ipsum' hasError = {false}/>)
+        const input = getByPlaceholderText('Lorem ipsum');
+        userEvent.type(input, 'Hello World');
+        getByDisplayValue('Hello World');
+    })
+
 })
